@@ -1,5 +1,6 @@
 package br.edu.ucsal.sergiolj.entitiesspringboot.catalog;
 
+import br.edu.ucsal.sergiolj.entitiesspringboot.Building;
 import br.edu.ucsal.sergiolj.entitiesspringboot.BuildingModel;
 import br.edu.ucsal.sergiolj.entitiesspringboot.ConstructionSet;
 import br.edu.ucsal.sergiolj.entitiesspringboot.Design;
@@ -20,11 +21,15 @@ public class Architecture extends Design {
     @OneToOne
     private BuildingModel buildingModel;
 
-    public Architecture(){
-        super();
+
+    public Architecture(Building building, String company, String responsibleTechnician, ConstructionSet cs) {
+        super(building, company, responsibleTechnician, cs);
     }
 
-    public Architecture(String company, String responsibleTechnician, ConstructionSet cs) {
-        super(company, responsibleTechnician, cs);
+    public Architecture(Building building, String company, String responsibleTechnician) {
+        this(building, company, responsibleTechnician, null);
+    }
+
+    public Architecture() {
     }
 }

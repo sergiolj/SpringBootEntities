@@ -24,13 +24,21 @@ public abstract class Design {
     private String responsibleTechnician;
 
     @ManyToOne
+    private Building building;
+
+    @ManyToOne
     @JoinColumn
     private ConstructionSet constructionSet;
 
-    public Design(String company, String responsibleTechnician, ConstructionSet cs) {
+    public Design(Building building, String company, String responsibleTechnician, ConstructionSet cs) {
+        this.building = building;
         this.company = company;
         this.responsibleTechnician = responsibleTechnician;
         this.constructionSet = cs;
+    }
+
+    public Design(Building building, String company, String responsibleTechnician) {
+        this(building, company,responsibleTechnician, null);
     }
 
     public Design() {

@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * Um Conjunto de esquemas construtivos representa um tipo de intervenção proposta para o edifício.
  * Ele contém plantas de projetos de diversas disciplinas.
- * Cada edifício pode ter muitos esquemas construtivos associados.
+ * Cada edifício pode ter múltiplos esquemas construtivos associados e cada esquema pode ter múltiplos
+ * projetos (designs) associados.
  */
 @Data
 @Entity
@@ -50,5 +51,11 @@ public class ConstructionSet {
 
     public ConstructionSet() {
 
+    }
+    public void addDesign(Design design){
+        if(design!=null){
+            this.designList.add(design);
+            design.setConstructionSet(this);
+        }
     }
 }

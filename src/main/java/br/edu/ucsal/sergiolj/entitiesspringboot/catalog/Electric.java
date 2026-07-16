@@ -1,5 +1,6 @@
 package br.edu.ucsal.sergiolj.entitiesspringboot.catalog;
 
+import br.edu.ucsal.sergiolj.entitiesspringboot.Building;
 import br.edu.ucsal.sergiolj.entitiesspringboot.BuildingModel;
 import br.edu.ucsal.sergiolj.entitiesspringboot.ConstructionSet;
 import br.edu.ucsal.sergiolj.entitiesspringboot.Design;
@@ -27,7 +28,11 @@ public class Electric extends Design {
         super();
     }
 
-    public Electric(String company, String responsibleTechnician, ConstructionSet cs) {
-        super(company, responsibleTechnician, cs);
+    public Electric(Building building, String company, String responsibleTechnician, ConstructionSet cs) {
+        super(building, company, responsibleTechnician, cs);
+    }
+
+    public Electric(Building building, String company, String responsibleTechnician) {
+        this(building, company, responsibleTechnician,null);
     }
 }
