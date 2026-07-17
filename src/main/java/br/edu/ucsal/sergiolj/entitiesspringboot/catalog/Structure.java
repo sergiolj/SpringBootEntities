@@ -1,8 +1,7 @@
 package br.edu.ucsal.sergiolj.entitiesspringboot.catalog;
 
-import br.edu.ucsal.sergiolj.entitiesspringboot.Building;
 import br.edu.ucsal.sergiolj.entitiesspringboot.BuildingModel;
-import br.edu.ucsal.sergiolj.entitiesspringboot.ConstructionSet;
+import br.edu.ucsal.sergiolj.entitiesspringboot.ConstructionProject;
 import br.edu.ucsal.sergiolj.entitiesspringboot.Design;
 import jakarta.persistence.*;
 
@@ -16,7 +15,7 @@ import jakarta.persistence.*;
 public class Structure extends Design {
 
     @ManyToOne
-    private ConstructionSet constructionSet;
+    private ConstructionProject constructionProject;
 
     @OneToOne
     private BuildingModel buildingModel;
@@ -25,12 +24,13 @@ public class Structure extends Design {
         super();
     }
 
-    public Structure(Building building, String company, String responsibleTechnician, ConstructionSet cs) {
-        super(building, company, responsibleTechnician, cs);
+    public Structure(String company, String responsibleTechnician,
+                     BuildingModel buildingModel, ConstructionProject cs) {
+        super(company, responsibleTechnician, buildingModel, cs);
     }
 
-    public Structure(Building building, String company, String responsibleTechnician) {
-        this(building, company, responsibleTechnician, null);
+    public Structure(String company, String responsibleTechnician) {
+        this(company, responsibleTechnician, null, null);
     }
 
 }

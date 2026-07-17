@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "design",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"construction_set_id", "discipline_type"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"construction_project_id", "discipline_type"})})
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "discipline_type", discriminatorType = DiscriminatorType.STRING)
 
@@ -24,24 +24,32 @@ public abstract class Design {
     private String responsibleTechnician;
 
     @ManyToOne
-    private Building building;
-
-    @ManyToOne
     @JoinColumn
-    private ConstructionSet constructionSet;
+    private ConstructionProject constructionProject;
 
-    public Design(Building building, String company, String responsibleTechnician, ConstructionSet cs) {
-        this.building = building;
+    @OneToOne (mappedBy = "design", cascade = CascadeType.ALL, orphanRemoval = true)
+    private BuildingModel buildingModel;
+
+    public Design(String company, String responsibleTechnician,
+                  BuildingModel buildingModel, ConstructionProject cs) {
         this.company = company;
         this.responsibleTechnician = responsibleTechnician;
-        this.constructionSet = cs;
+        this.buildingModel =  buildingModel;
+        this.constructionProject = cs;
     }
 
-    public Design(Building building, String company, String responsibleTechnician) {
-        this(building, company,responsibleTechnician, null);
+    public Design(String company, String responsibleTechnician) {
+        this(company, responsibleTechnician, null, null);
     }
 
     public Design() {
 
+    }
+
+    public void setBuildingModel (BuildingModel model){
+        this.buildingModel = model;
+        if(buildingModel!=null){
+            buildingModel.setDesign(this);
+        }
     }
 }

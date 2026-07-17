@@ -3,6 +3,7 @@ package br.edu.ucsal.sergiolj.entitiesspringboot;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,12 +27,16 @@ public class Building {
         this.address = address;
     }
 
-    @OneToMany
-    @JoinColumn(name = "schematics_id")
-    private List<ConstructionSet> constructionSetList;
+    @OneToMany (mappedBy = "building", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ConstructionProject> constructionProjectList = new ArrayList<>();
 
 
     public Building() {
 
+    }
+
+    public void addConstructionProject(ConstructionProject cs){
+        this.constructionProjectList.add(cs);
+        cs.setBuilding(this);
     }
 }

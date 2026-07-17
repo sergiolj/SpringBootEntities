@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Data
 @Entity
-public class ConstructionSet {
+public class ConstructionProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,14 +32,18 @@ public class ConstructionSet {
     private LocalDate concludedDate;
 
     @ManyToOne
+    @JoinColumn(name="building_id", nullable = false)
     private Building building;
 
-    @OneToMany(mappedBy = "constructionSet", cascade = CascadeType.ALL, orphanRemoval = true)
+    //Quando a anotação termina em Many (@OneToMany, @ManyToMany) o padrão JPA é LAZY,
+    //onde os registros da lista não são colocados previamente em memória e sim apenas quando explicitamente
+    //solicitados com algum conteúdo da lista como size(), get(), add()
+    @OneToMany(mappedBy = "constructionProject", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Design> designList = new ArrayList<>();
 
-    public ConstructionSet(String name, String description, ProjectType projectType,
-                           DesignStatus projectStatus, LocalDate startedDate,
-                           LocalDate concludedDate, Building building) {
+    public ConstructionProject(String name, String description, ProjectType projectType,
+                               DesignStatus projectStatus, LocalDate startedDate,
+                               LocalDate concludedDate, Building building) {
         this.name = name;
         this.description = description;
         this.projectType = projectType;
@@ -49,13 +53,13 @@ public class ConstructionSet {
         this.building = building;
     }
 
-    public ConstructionSet() {
+    public ConstructionProject() {
 
     }
     public void addDesign(Design design){
         if(design!=null){
             this.designList.add(design);
-            design.setConstructionSet(this);
+            design.setConstructionProject(this);
         }
     }
 }

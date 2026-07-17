@@ -1,8 +1,7 @@
 package br.edu.ucsal.sergiolj.entitiesspringboot.catalog;
 
-import br.edu.ucsal.sergiolj.entitiesspringboot.Building;
 import br.edu.ucsal.sergiolj.entitiesspringboot.BuildingModel;
-import br.edu.ucsal.sergiolj.entitiesspringboot.ConstructionSet;
+import br.edu.ucsal.sergiolj.entitiesspringboot.ConstructionProject;
 import br.edu.ucsal.sergiolj.entitiesspringboot.Design;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -19,7 +18,7 @@ import jakarta.persistence.OneToOne;
 public class Electric extends Design {
 
     @ManyToOne
-    private ConstructionSet constructionSet;
+    private ConstructionProject constructionProject;
 
     @OneToOne
     private BuildingModel buildingModel;
@@ -28,11 +27,11 @@ public class Electric extends Design {
         super();
     }
 
-    public Electric(Building building, String company, String responsibleTechnician, ConstructionSet cs) {
-        super(building, company, responsibleTechnician, cs);
+    public Electric(String company, String responsibleTechnician, BuildingModel buildingModel, ConstructionProject cs) {
+        super(company, responsibleTechnician, buildingModel, cs);
     }
 
-    public Electric(Building building, String company, String responsibleTechnician) {
-        this(building, company, responsibleTechnician,null);
+    public Electric(String company, String responsibleTechnician) {
+        this(company, responsibleTechnician,null, null);
     }
 }
